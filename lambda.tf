@@ -1,7 +1,7 @@
 data "archive_file" "zip" {
   type        = "zip"
   source_file = "lambda_function.py"
-  output_path = "../lambda/hello.zip"
+  output_path = "hello.zip"
 }
 
 resource "aws_lambda_function" "hello" {
@@ -13,7 +13,7 @@ resource "aws_lambda_function" "hello" {
   handler       = "hello.handler"
   runtime       = "python3.11"
   timeout       = 10
-  publish       = true
+  # publish       = true
 }
 
 resource "aws_lambda_alias" "alias_dev" {

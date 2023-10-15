@@ -2,10 +2,10 @@
 module "eventbridge" {
   source = "terraform-aws-modules/eventbridge/aws"
 
-  bus_name = "default" # "default" bus already support schedule_expression in rules
+  bus_name = "schedule_bus" # "default" bus already support schedule_expression in rules
 
   attach_lambda_policy = true
-  lambda_target_arns   = aws_lambda_function.hello.arn
+  lambda_target_arns   = [aws_lambda_function.hello.arn]
 
   schedules = {
     lambda-cron = {
