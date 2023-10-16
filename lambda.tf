@@ -13,7 +13,9 @@ resource "aws_lambda_function" "hello" {
   handler       = "hello.handler"
   runtime       = "python3.11"
   timeout       = 10
-  # publish       = true
+  layers        = [aws_lambda_layer_version.lambda_layer.arn]
+  publish       = true
+
 }
 
 resource "aws_lambda_alias" "alias_dev" {
@@ -35,10 +37,9 @@ resource "aws_cloudwatch_log_group" "convert_log_group" {
 }
 
 resource "aws_lambda_layer_version" "lambda_layer" {
-  filename   = "requests.zip"
-  layer_name = "requests_lambda_layer"
-
-  compatible_runtimes = ["python3.11"]
+  filename              = "requests.zip"
+  layer_name            = "requests_lambda_layer"
+  compatible_runtimes   = ["python3.11"]
 }
 
 resource "aws_lambda_function_event_invoke_config" "send_notification" {
