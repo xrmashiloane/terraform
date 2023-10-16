@@ -14,6 +14,7 @@ module "eventbridge" {
       timezone            = "Africa/Johannesburg"
       arn                 = aws_lambda_function.hello.arn
       input               =  jsonencode({"query": "Durban"})
+      
     }
   }
 }

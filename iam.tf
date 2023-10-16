@@ -3,6 +3,12 @@
 #
 
 # trust relationships
+
+#get account details
+
+data "aws_caller_identity" "current" {}
+
+
 data "aws_iam_policy_document" "lambda_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -27,6 +33,14 @@ data "aws_iam_policy_document" "lambda_assume_role_policy" {
       identifiers = ["lambda.amazonaws.com"]
     }
     resources = [aws_sns_topic.results_updates.arn]
+  }
+  statement {
+    actions = ["kms:Decrypt"]
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+    resources = ["arn:aws:kms:${aws.region}:${data.aws_caller_identity.current.account_id}:key/*"]
   }
 }
 
