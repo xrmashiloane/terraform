@@ -18,7 +18,7 @@ provider "aws" {
   region = "af-south-1"
 }
 
-variable "access_key_value" {
+variable "api_access_key_value" {
   type = string
   sensitive = true
 }
