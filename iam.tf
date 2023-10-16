@@ -24,7 +24,7 @@ data "aws_iam_policy_document" "lambda_assume_role_policy" {
       identifiers = ["lambda.amazonaws.com"]
 
     }
-    resources = [aws_ssm_parameter.access_key.arn]
+    resources = [aws_ssm_parameter.api_access_key.arn]
   }
   statement {
     actions = ["sns:Publish"]
