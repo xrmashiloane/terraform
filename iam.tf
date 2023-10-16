@@ -40,7 +40,7 @@ data "aws_iam_policy_document" "lambda_assume_role_policy" {
       type        = "Service"
       identifiers = ["lambda.amazonaws.com"]
     }
-    resources = ["arn:aws:kms:${aws.region}:${data.aws_caller_identity.current.account_id}:key/*"]
+    resources = ["arn:aws:kms:${var.aws_region}:${data.aws_caller_identity.current.account_id}:key/*"]
   }
 }
 
