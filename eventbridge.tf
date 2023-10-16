@@ -1,8 +1,6 @@
 module "eventbridge" {
   source = "terraform-aws-modules/eventbridge/aws"
 
-  bus_name = "${var.project_name}-eventbus"
-
   attach_lambda_policy = true
   create_role = true
   lambda_target_arns   = [aws_lambda_function.hello.arn]
