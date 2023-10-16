@@ -17,3 +17,8 @@ provider "aws" {
   # Configuration options
   region = "af-south-1"
 }
+
+variable "access_key_value" {
+  type = string
+  sensitive = true
+}
