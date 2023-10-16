@@ -15,6 +15,7 @@ resource "aws_lambda_function" "hello" {
   timeout       = 10
   layers        = [aws_lambda_layer_version.lambda_layer.arn]
   publish       = true
+  
 
 }
 
