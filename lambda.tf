@@ -9,7 +9,7 @@ resource "aws_lambda_function" "hello" {
   source_code_hash = filebase64sha256(data.archive_file.zip.output_path)
 
   function_name = var.project_name
-  role          = aws_iam_role.lambda_role.arn
+  role          = aws_iam_role.iam_for_lambda.arn
   handler       = "hello.handler"
   runtime       = "python3.11"
   timeout       = 10
@@ -39,4 +39,18 @@ resource "aws_lambda_layer_version" "lambda_layer" {
   layer_name = "requests_lambda_layer"
 
   compatible_runtimes = ["python3.11"]
+}
+
+resource "aws_lambda_function_event_invoke_config" "send_notification" {
+  function_name = aws_lambda_function.hello.arn
+
+  destination_config {
+    on_failure {
+      destination = aws_sns_topic.results_updates.arn
+    }
+
+    on_success {
+      destination = aws_sns_topic.results_updates.arn
+    }
+  }
 }

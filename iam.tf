@@ -1,40 +1,20 @@
-#
-# lambda assume role policy
-#
+resource "aws_iam_role" "iam_for_lambda" {
+  name = "iam_for_lambda"
 
-# trust relationships
-
-#get account details
-
-data "aws_caller_identity" "current" {}
-
-
-data "aws_iam_policy_document" "lambda_assume_role_policy" {
-  statement {
-    actions = ["sts:AssumeRole"]
-    principals {
-      type        = "Service"
-      identifiers = ["lambda.amazonaws.com"]
-    }
-  }
-  statement {
-    actions = ["ssm:GetParameter"]
-    resources = [aws_ssm_parameter.api_access_key.arn]
-    effect = "Allow"
-  }
-  statement {
-    actions = ["sns:Publish"]
-    resources = [aws_sns_topic.results_updates.arn]
-    effect = "Allow"
-  }
-  statement {
-    actions = ["kms:Decrypt"]
-    resources = ["arn:aws:kms:${var.aws_region}:${data.aws_caller_identity.current.account_id}:key/*"]
-    effect = "Allow"
-  }
+  # Terraform's "jsonencode" function converts a
+  # Terraform expression result to valid JSON syntax.
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+      },
+    ]
+  })
 }
 
-resource "aws_iam_role" "lambda_role" {
-  name               = "${var.project_name}-lambda-role"
-  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
-}
