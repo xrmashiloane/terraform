@@ -25,6 +25,7 @@ data "aws_iam_policy_document" "lambda_assume_role_policy" {
 
     }
     resources = [aws_ssm_parameter.api_access_key.arn]
+    effect = "Allow"
   }
   statement {
     actions = ["sns:Publish"]
@@ -33,6 +34,7 @@ data "aws_iam_policy_document" "lambda_assume_role_policy" {
       identifiers = ["lambda.amazonaws.com"]
     }
     resources = [aws_sns_topic.results_updates.arn]
+    effect = "Allow"
   }
   statement {
     actions = ["kms:Decrypt"]
@@ -41,6 +43,7 @@ data "aws_iam_policy_document" "lambda_assume_role_policy" {
       identifiers = ["lambda.amazonaws.com"]
     }
     resources = ["arn:aws:kms:${var.aws_region}:${data.aws_caller_identity.current.account_id}:key/*"]
+    effect = "Allow"
   }
 }
 
