@@ -33,3 +33,10 @@ resource "aws_lambda_alias" "alias_prod" {
 resource "aws_cloudwatch_log_group" "convert_log_group" {
   name = "/aws/lambda/${aws_lambda_function.hello.function_name}"
 }
+
+resource "aws_lambda_layer_version" "lambda_layer" {
+  filename   = "requests.zip"
+  layer_name = "requests_lambda_layer"
+
+  compatible_runtimes = ["python3.11"]
+}
