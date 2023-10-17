@@ -9,7 +9,9 @@ resource "aws_scheduler_schedule" "my_scheduler" {
     mode = "OFF"
   }
 
-  schedule_expression = "rate(5 minutes)"
+  
+
+  schedule_expression = "cron(0 9 ? * MON-FRI *)"
 
   target {
     arn      = "arn:aws:scheduler:::aws-sdk:sqs:sendMessage"
