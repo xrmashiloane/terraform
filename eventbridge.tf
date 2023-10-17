@@ -1,35 +1,24 @@
-module "eventbridge" {
-  source = "terraform-aws-modules/eventbridge/aws"
+# Create a new EventBridge Rule
+resource "aws_cloudwatch_event_rule" "event_rule" {
+  event_pattern = <<PATTERN
+{
+  "account": ["${data.aws_caller_identity.current.account_id}"],
+  "source": ["demo.sqs"]
+}
+PATTERN
+}
 
-  attach_lambda_policy = true
-  create_role = true
-  lambda_target_arns   = [aws_lambda_function.hello.arn]
-
-  rules = {
-    crons = {
-      description         = "Trigger for a Lambda"
-      schedule_expression = "rate(50 minutes)"
-    }
-  }
-
-  targets = {
-    crons = [
-      {
-        name  = "lambda-loves-cron"
-        arn   = aws_lambda_function.hello.arn
-        input = jsonencode({ "query" : "Johannesburg" })
-      }
-    ]
-  }
+# Set the SQS as a target to the EventBridge Rule
+resource "aws_cloudwatch_event_target" "event_rule_target" {
+  rule = aws_cloudwatch_event_rule.event_rule.name
+  arn  = aws_sqs_queue.sqs_queue.arn
+}
 
 
-  schedules = {
-    lambda-cron = {
-      description         = "Trigger for a Lambda"
-      schedule_expression = "rate(1 day)"
-      timezone            = "Africa/Johannesburg"
-      arn                 = aws_lambda_function.hello.arn
-      input               = jsonencode({ "query" : "Johannesburg" })
-    }
-  }
+
+
+# Display the SQS queue URL
+output "SQS-QUEUE" {
+  value       = aws_sqs_queue.sqs_queue.id
+  description = "The SQS Queue URL"
 }
