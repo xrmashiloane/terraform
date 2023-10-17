@@ -1,14 +1,23 @@
 data "local_file" "json_data" {
   filename = "${path.module}/event.json"
 }
-# Create a new EventBridge Rule
-resource "aws_cloudwatch_event_rule" "event_rule" {
-  name = "${var.project_name}-event-rule"
-  event_pattern = data.local_file.json_data.content
-}
+# Create a new EventBridge Schedule
+resource "aws_scheduler_schedule" "my_scheduler" {
+  name = "${var.project_name}-schedule"
 
-# Set the SQS as a target to the EventBridge Rule
-resource "aws_cloudwatch_event_target" "event_rule_target" {
-  rule = aws_cloudwatch_event_rule.event_rule.name
-  arn  = aws_sqs_queue.sqs_queue.arn
+  flexible_time_window {
+    mode = "OFF"
+  }
+
+  schedule_expression = "rate(5 minutes)"
+
+  target {
+    arn      = "arn:aws:scheduler:::aws-sdk:sqs:sendMessage"
+    role_arn = aws_iam_role.eventbridge_scheduler_iam_role.arn
+
+    input = jsonencode({
+      MessageBody = data.local_file.json_data.content
+      QueueUrl    = aws_sqs_queue.sqs_queue.id
+    })
+  }
 }

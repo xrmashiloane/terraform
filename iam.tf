@@ -76,28 +76,47 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attach" {
   policy_arn = aws_iam_policy.lambda_policy.arn
 }
 
-# Allow the EventBridge to send messages to the SQS queue.
-resource "aws_sqs_queue_policy" "sqs_queue_policy" {
-  queue_url = aws_sqs_queue.sqs_queue.id
-  policy    = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Id": "sqspolicy",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "events.amazonaws.com"
-      },
-      "Action": "sqs:SendMessage",
-      "Resource": "${aws_sqs_queue.sqs_queue.arn}",
-      "Condition": {
-        "ArnEquals": {
-          "aws:SourceArn": "${aws_cloudwatch_event_rule.event_rule.arn}"
-        }
+# Create new IAM Policy and Role for EventBridge Scheduler
+resource "aws_iam_policy" "sqs_access_policy" {
+  name        = "${var.project_name}-sqs-access-policy"
+  description = "Policy for EventBridge Scheduler to send messages to SQS"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "sqs:ReceiveMessage",
+          "sqs:DeleteMessage",
+          "sqs:SendMessage",
+          "sqs:GetQueueAttributes",
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        Effect   = "Allow"
+        Resource = "${aws_sqs_queue.sqs_queue.arn}"
       }
-    }
-  ]
+    ]
+  })
 }
-POLICY
+
+resource "aws_iam_role" "eventbridge_scheduler_iam_role" {
+  name_prefix         = "eb-scheduler-role-"
+  managed_policy_arns = [aws_iam_policy.sqs_access_policy.arn]
+  path = "/"
+  assume_role_policy  = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "scheduler.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+EOF
 }
