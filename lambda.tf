@@ -2,7 +2,7 @@
 data "archive_file" "zip" {
   type        = "zip"
   source_file = "lambda_function.py"
-  output_path = "hello.zip"
+  output_path = "lambda_function.zip"
 }
 
 #Create Lambda function and related aliases
@@ -12,7 +12,6 @@ resource "aws_lambda_function" "hello" {
 
   function_name = var.project_name
   role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "lambda_handler.handler"
   runtime       = "python3.11"
   timeout       = 10
   layers        = [aws_lambda_layer_version.lambda_layer.arn]

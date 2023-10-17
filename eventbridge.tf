@@ -9,7 +9,7 @@ resource "aws_scheduler_schedule" "my_scheduler" {
     mode = "OFF"
   }
 
-  schedule_expression = "rate(12 hours)"
+  schedule_expression = "rate(5 minutes)"
 
   target {
     arn      = "arn:aws:scheduler:::aws-sdk:sqs:sendMessage"
