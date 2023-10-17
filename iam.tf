@@ -43,6 +43,7 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
     resources = [
       "arn:aws:kms:${var.aws_region}:${data.aws_caller_identity.current.account_id}:key/*"
     ]
+    effect = "Allow"
   }
   statement {
     sid       = "GetSecureParameter"
@@ -52,6 +53,7 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
     resources = [
       aws_ssm_parameter.api_access_key.arn
     ]
+    effect = "Allow"
   }
   statement {
     sid = "ReceiveMessegesSQS"
