@@ -53,6 +53,17 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
       aws_ssm_parameter.api_access_key.arn
     ]
   }
+  statement {
+    sid = "ReceiveMessegesSQS"
+    actions = [
+      "sqs:DeleteMessage",
+      "sqs:ReceiveMessage",
+      "sqs:GetQueueAttributes"
+    ]
+    resources = [
+      aws_sqs_queue.sqs_queue.arn
+    ]
+  }
 }
 
 resource "aws_iam_policy" "lambda_policy" {
