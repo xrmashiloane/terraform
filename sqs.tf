@@ -12,7 +12,7 @@ resource "aws_sqs_queue" "sqs_queue_deadletter" {
 
 }
 
-resource "aws_sqs_queue_redrive_allow_policy" "inbound_message_dlq" {
+resource "aws_sqs_queue_redrive_allow_policy" "sqs_queue_deadletter" {
     queue_url = aws_sqs_queue.sqs_queue.id
    redrive_allow_policy = jsonencode({
     redrivePermission = "byQueue",
