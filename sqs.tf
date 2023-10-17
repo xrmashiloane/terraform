@@ -7,11 +7,13 @@ resource "aws_sqs_queue" "sqs_queue" {
     receive_wait_time_seconds = 10
 }
 
+#Create dead letter queue
 resource "aws_sqs_queue" "sqs_queue_deadletter" {
   name = "${var.project_name}-deadletter-queue"
 
 }
 
+#Create redrive policy
 resource "aws_sqs_queue_redrive_allow_policy" "sqs_queue_deadletter" {
     queue_url = aws_sqs_queue.sqs_queue.id
    redrive_allow_policy = jsonencode({

@@ -1,7 +1,4 @@
-[
     {
-      "DetailType": "message",
-      "Source": "demo.sqs",
-      "Detail": "{\"message\":\"Hello From EventBridge!\"}"
+     "first_name" : "Reagan",
+     "last_name" : "Mashiloane"
     }
-  ]

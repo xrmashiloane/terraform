@@ -1,3 +1,7 @@
+#Get account details for use with KMS policy 
+
+data "aws_caller_identity" "current" {}
+
 #Lamda Execution Role
 resource "aws_iam_role" "iam_for_lambda" {
   name = "iam_for_lambda"
@@ -19,11 +23,7 @@ resource "aws_iam_role" "iam_for_lambda" {
   })
 }
 
-#Get account details for use with KMS policy 
-
-data "aws_caller_identity" "current" {}
-
-#Update role with permission to send SNS Notifications
+#Update role with permission to send SNS Notifications, access SQS queue itens, decrypt secure parameter
 
 data "aws_iam_policy_document" "lambda_policy_doc" {
   statement {
