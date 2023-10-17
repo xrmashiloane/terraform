@@ -64,6 +64,17 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
       aws_sqs_queue.sqs_queue.arn
     ]
   }
+  statement {
+    sid = "WriteLogs"
+    actions = [
+        "logs:CreateLogStream",
+        "logs:CreateLogDelivery",
+        "logs:PutLogEvents"
+    ]
+    resources = [
+      "arn:aws:logs:*:*:*"
+    ]
+  }
 }
 
 resource "aws_iam_policy" "lambda_policy" {

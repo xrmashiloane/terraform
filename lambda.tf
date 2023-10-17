@@ -51,6 +51,10 @@ resource "aws_lambda_event_source_mapping" "event_source_mapping" {
 #Create Cloudwatch log group for Lambda
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
   name = "/aws/lambda/${aws_lambda_function.hello.function_name}"
+  retention_in_days = 7
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 #Send function results to SNS topic for delivery to subscribers
