@@ -2,6 +2,10 @@
 
 A lightweight weather API call application written in Python that calls external API to retrieve current weather conditions for a provided location.
 
+## Architecture Diagram
+
+![ArchitectureDiagram](https://github.com/xrmashiloane/terraform/assets/17061164/7e002ec0-94b3-4628-9fe6-19a55910cf75)
+
 
 ## Environment Variables
 
