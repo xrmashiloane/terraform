@@ -47,7 +47,7 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
   statement {
     sid       = "GetSecureParameter"
     actions   = [
-      "ssm:GetParameter"
+      "ssm:GetParameter*"
     ]
     resources = [
       aws_ssm_parameter.api_access_key.arn
