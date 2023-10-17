@@ -6,10 +6,8 @@ def lambda_handler(event, context):
 
         
         message = event['Records'][0]['body']
-        print(message)
-        query = json.loads(message)
 
-        print(type(query))
+        query = json.loads(message)
 
         ssm_client = boto3.client('ssm')
     
@@ -22,8 +20,8 @@ def lambda_handler(event, context):
     
 
         params = {
-            "access_key": get_parameter('access_key'),
-            "query": "Durban"
+            "access_key": get_parameter('api_access_key_value'),
+            "query": query["query"]
         }
 
         data = requests.get('http://api.weatherstack.com/current', params=params).json()
