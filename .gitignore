@@ -39,3 +39,4 @@ terraform.rc
 
 #Ignore Terraform Config file. Rename from terraform.tf.example to terraform.tf and change accordingly
 terraform.tf
+variables.tf
