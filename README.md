@@ -9,27 +9,27 @@ A lightweight weather API call application written in Python that calls external
 ## Environment Setup
 
 > [!IMPORTANT]  
-> To run this project, you will need to add the following environment variables to your .env or .tfvars file. Remember to gitignore for repository check in.
+> To run this project, you must add the following environment variables to your `.tfvars` file. 
 
 `api_access_key_value`
 `aws_region`
+
 
 
 > [!WARNING]  
 > Always have a .gitignore file to prevent inadvent leakage of sensetive information. 
 
 
-See below for prerequisite setup not provided in within provided Terraform
+## Prerequisites
 
 Setup Terraform Cloud with VCS/Git workflow: https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-sign-up 
 
 Sign up for free weather API account: https://weatherstack.com/signup
 
 
-
 ## Deployment
 
-First create role with access to provision resources in your AWS accrount using terraform files in path ./aws/trust set variables accordingly.
+First create role with access to provision resources in your AWS accrount using terraform files in path `/aws_openid/trust` set variables accordingly.
 
 Once variables are setup run below to create role for Terraform for use with OpenID for temporary, role based authentication to AWS
 
