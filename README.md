@@ -59,10 +59,6 @@ This is only required once if VCS/Git is set up for your Terraform Cloud account
 
 **Server:** Serverless Compute
 
-## Lessons Learned
-
-What did you learn while building this project? What challenges did you face and how did you overcome them?
-
 
 ## Authors
 
