@@ -46,3 +46,8 @@ What did you learn while building this project? What challenges did you face and
 ## Authors
 
 - [@xrmashiloane](https://www.github.com/xrmashiloane)
+
+
+## License
+
+This library is licensed under the MIT-0 License. See the [LICENSE](LICENSE) file.
