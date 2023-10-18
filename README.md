@@ -8,10 +8,16 @@ A lightweight weather API call application written in Python that calls external
 
 ## Environment Setup
 
-To run this project, you will need to add the following environment variables to your .env or .tfvars file
+> [!IMPORTANT]  
+> To run this project, you will need to add the following environment variables to your .env or .tfvars file. Remember to gitignore for repository check in.
 
 `api_access_key_value`
 `aws_region`
+
+
+> [!WARNING]  
+> Always have a .gitignore file to prevent inadvent leakage of sensetive information. 
+
 
 See below for prerequisite setup not provided in within provided Terraform
 
