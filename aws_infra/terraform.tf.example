@@ -8,20 +8,21 @@ terraform {
   #Only required for Terraform Cloud runs
   #Create organisation and workspace, more details here: https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/organizations
   cloud {
-    organization = "xrmashiloane"
+    organization = <{ REPLACE WITH OWN ORGANISATION DETAILS }>
 
     workspaces {
-      name = "terraform"
+      name = <{ REPLACE WITH OWN WORKSPACE DETAILS }>
     }
   }
 }
 
 provider "aws" {
   # Configuration options
-  region = var.aws_region
+  region = <{ REPLACE WITH AWS REGION DETAILS }>
 }
 
-#Declare API key as secret variable to prevent leakage
+#Declare API key as secret variable to prevent leakage. Add .env variable. If using Terraform Cloud add Workspace variable
+# with name TF_VAR_access_key_value for local Terraform export access_key_value to set.
 variable "api_access_key_value" {
   type = string
   sensitive = true
