@@ -4,15 +4,22 @@ A lightweight weather API call application written in Python that calls external
 
 ## Architecture Diagram
 
-![ArchitectureDiagram](https://github.com/xrmashiloane/terraform/assets/17061164/7e002ec0-94b3-4628-9fe6-19a55910cf75)
+![Architecture Diagram](ArchitectureDiagram.png)
 
-
-## Environment Variables
+## Environment Setup
 
 To run this project, you will need to add the following environment variables to your .env or .tfvars file
 
 `api_access_key_value`
 `aws_region`
+
+See below for prerequisite setup not provided in within provided Terraform
+
+Setup Terraform Cloud with VCS/Git workflow: https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-sign-up 
+
+Sign up for free weather API account: https://weatherstack.com/signup
+
+
 
 ## Deployment
 
