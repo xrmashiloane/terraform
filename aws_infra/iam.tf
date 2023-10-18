@@ -24,7 +24,6 @@ resource "aws_iam_role" "iam_for_lambda" {
 }
 
 #Update role with permission to send SNS Notifications, access SQS queue itens, decrypt secure parameter
-
 data "aws_iam_policy_document" "lambda_policy_doc" {
   statement {
     sid       = "SendNotification"
@@ -79,17 +78,19 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
   }
 }
 
+#Create IAM Policy from policy document
 resource "aws_iam_policy" "lambda_policy" {
   name   = "${var.project_name}-policy"
   policy = data.aws_iam_policy_document.lambda_policy_doc.json
 }
 
+#Attach IAM policy to Lambda function
 resource "aws_iam_role_policy_attachment" "lambda_policy_attach" {
   role       = aws_iam_role.iam_for_lambda.name
   policy_arn = aws_iam_policy.lambda_policy.arn
 }
 
-# Create new IAM Policy and Role for EventBridge Scheduler
+# Create new IAM Policy document for EventBridge Scheduler
 resource "aws_iam_policy" "sqs_access_policy" {
   name        = "${var.project_name}-sqs-access-policy"
   description = "Policy for EventBridge Scheduler to send messages to SQS"
@@ -114,6 +115,7 @@ resource "aws_iam_policy" "sqs_access_policy" {
   })
 }
 
+# Create new IAM Role for EventBridge Scheduler
 resource "aws_iam_role" "eventbridge_scheduler_iam_role" {
   name_prefix         = "eb-scheduler-role-"
   managed_policy_arns = [aws_iam_policy.sqs_access_policy.arn]

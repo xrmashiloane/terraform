@@ -22,25 +22,24 @@ def lambda_handler(event, context):
                 WithDecryption=True                           
                 )
             return parameter['Parameter']['Value']
-        
-        
+    
 
-        def get_current_conditions(list):
-                 for city in list:
-                    print(city)
-                    params = {
-                        "access_key": get_parameter('api_access_key_value'),
-                        "query": "{city}".format(city=city)
-                    }
-                    data = requests.get('http://api.weatherstack.com/current', params=params).json()
+        params = {
+            "access_key": get_parameter('api_access_key_value'),
+            "query": query["query"]
+        }
 
-                           
-                    return data
-            
-        get_current_conditions(cities)
+        data = requests.get('http://api.weatherstack.com/current', params=params).json()
+    
+        if data:
+            location = data['location']['name']
+            region = data['location']['region']
+            country = data['location']['country']
+            temperature = data['current']['temperature']
+            feels = data['current']['feelslike']
+            condition = data['current']['weather_descriptions'][0]
+        else:
+            return print("Error fetching data")
 
-        
-                    
-
-        
+        return data
         

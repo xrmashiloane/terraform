@@ -1,6 +1,6 @@
 # Weather Client
 
-A lightweight weather API call application written in Python that calls external API to retrieve current weather conditions for a provided location.
+A lightweight weather API call application written in Python that calls external API on a schedule to retrieve current weather conditions for a provided location.
 
 ## Architecture Diagram
 
@@ -26,12 +26,25 @@ Setup Terraform Cloud with VCS/Git workflow: https://developer.hashicorp.com/ter
 
 Sign up for free weather API account: https://weatherstack.com/signup
 
+Rename terraform.tf.example to terraform.tf 
+
+Replace values enclosed with <{ }> with own values
+
+
 
 ## Deployment
 
-First create role with access to provision resources in your AWS accrount using terraform files in path `/aws_openid/trust` set variables accordingly.
 
-Once variables are setup run below to create role for Terraform for use with OpenID for temporary, role based authentication to AWS
+
+First create role with access to provision resources in your AWS accrount using terraform files in path {PROJECT_DIR}/aws_openid/trust set variables accordingly.
+
+Once variables are setup run below to create role for Terraform for use with OpenID for temporary, role based authentication to AWS this conforms to AWS best practice. 
+
+Remember to delete saved long lasting credentials from local environment for improved security.
+
+
+
+Each folder has Terraform files each peforming a specific task. 
 
 ```bash
   terraform init
