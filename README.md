@@ -45,6 +45,14 @@ Once variables are setup run below to create role for Terraform for use with Ope
   terraform apply
 ```
 
+This is only required once if VCS/Git is set up for your Terraform Cloud account. Plans will then run from cloud backend on code check in. 
+
+> [!IMPORTANT]  
+> Set Terraform Cloud to `aws_infra` in workspace setting to ensure correct files are loaded for plans.
+
+ More information here: https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings#terraform-working-directory
+
+
 ## Tech Stack
 
 **Client:** Python
