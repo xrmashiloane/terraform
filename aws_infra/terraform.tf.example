@@ -22,7 +22,8 @@ provider "aws" {
 }
 
 #Declare API key as secret variable to prevent leakage. Add .env variable. If using Terraform Cloud add Workspace variable
-# with name TF_VAR_access_key_value for local Terraform export access_key_value to set.
+# with name TF_VAR_access_key_value for local Terraform export access_key_value or add a .tfvars file. 
+
 variable "api_access_key_value" {
   type = string
   sensitive = true
