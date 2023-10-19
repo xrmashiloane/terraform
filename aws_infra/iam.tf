@@ -51,7 +51,7 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
       "ssm:GetParameter*"
     ]
     resources = [
-      aws_ssm_parameter.api_access_key.arn
+      aws_ssm_parameter.api_access_key_value.arn
     ]
     effect = "Allow"
   }

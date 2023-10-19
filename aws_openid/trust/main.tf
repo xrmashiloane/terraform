@@ -3,7 +3,7 @@
 
 provider "aws" {
   region = var.aws_region
-  profile = "default" #Update with credential profile name more information here: https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+  profile = "vscode-profile" #Update with credential profile name more information here: https://registry.terraform.io/providers/hashicorp/aws/latest/docs
 }
 
 data "tls_certificate" "tfc_certificate" {

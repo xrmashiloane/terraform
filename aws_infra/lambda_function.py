@@ -3,12 +3,17 @@ import requests
 import boto3
 
 def lambda_handler(event, context):
+  
+        results = []
 
+        raw_text = event['Records'][0]['body']
         
-        message = event['Records'][0]['body']
-
-        query = json.loads(message)
-
+        cities_list = raw_text.replace("\\n", ",")
+        
+        cities_list = cities_list.replace('\"', '')
+        
+        cities = cities_list.split(",")
+            
         ssm_client = boto3.client('ssm')
     
         def get_parameter(name):
@@ -17,25 +22,25 @@ def lambda_handler(event, context):
                 WithDecryption=True                           
                 )
             return parameter['Parameter']['Value']
-    
+        
+        
 
-        params = {
-            "access_key": get_parameter('api_access_key_value'),
-            "query": query["query"]
-        }
+        def get_current_conditions(list):
+                 for city in list:
+                    print(city)
+                    params = {
+                        "access_key": get_parameter('api_access_key_value'),
+                        "query": "{city}".format(city=city)
+                    }
+                    data = requests.get('http://api.weatherstack.com/current', params=params).json()
 
-        data = requests.get('http://api.weatherstack.com/current', params=params).json()
-        # Save results to dynamo db
-    
-        if data:
-            location = data['location']['name']
-            region = data['location']['region']
-            country = data['location']['country']
-            temperature = data['current']['temperature']
-            feels = data['current']['feelslike']
-            condition = data['current']['weather_descriptions'][0]
-        else:
-            return print("Error fetching data")
+                           
+                    return data
+            
+        get_current_conditions(cities)
 
-        return data
+        
+                    
+
+        
         
