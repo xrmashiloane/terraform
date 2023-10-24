@@ -30,7 +30,7 @@ resource "aws_dynamodb_table_item" "city_put" {
   item = <<EOF
   {
     "location": {"S": "${each.value.city}"}
-    "current_temp": {"N": "${locals.current_temp}"}
+    "current_temp": {"N": "${local.current_temp}"}
   }
   EOF
 
