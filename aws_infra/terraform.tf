@@ -11,7 +11,7 @@ terraform {
     organization = "xrmashiloane"
 
     workspaces {
-      name = "workspace"
+      name = "terraform"
     }
   }
 }
