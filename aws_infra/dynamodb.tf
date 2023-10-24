@@ -10,10 +10,6 @@ resource "aws_dynamodb_table" "dynamodb-table" {
     name = "location"
     type = "S"
   }
-  attribute {
-    name = "current_temp"
-    type = "N"
-  }
 }
 
 locals {
