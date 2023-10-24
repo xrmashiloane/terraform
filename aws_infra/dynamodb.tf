@@ -18,7 +18,7 @@ resource "aws_dynamodb_table" "dynamodb-table" {
 
 locals {
   city_list = csvdecode(file("${path.module}/cities.csv"))
-  current_temp = 0
+
 }
 
 resource "aws_dynamodb_table_item" "city_put" {
@@ -30,7 +30,7 @@ resource "aws_dynamodb_table_item" "city_put" {
   item = <<EOF
   {
     "location": {"S": "${each.value.city}"}
-    "current_temp": {"N": "${local.current_temp}"}
+
   }
   EOF
 
