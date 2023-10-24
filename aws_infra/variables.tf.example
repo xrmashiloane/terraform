@@ -6,3 +6,10 @@ variable "aws_region" {
   type = string
   default = "us-east-1" #Change
 }
+
+#Flag used to instruct module to load provided example cities file into created Dynamodb Table
+variable "load_city_data" {
+  description = "Flag: load city data from local repository"
+  type = bool
+  default = true
+}

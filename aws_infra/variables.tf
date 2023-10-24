@@ -10,3 +10,9 @@ variable "aws_region" {
 variable "filename" {
   default = "cities.csv"
 }
+
+variable "load_city_data" {
+  description = "Flag: load city data from local repository"
+  type = bool
+  default = true
+}
