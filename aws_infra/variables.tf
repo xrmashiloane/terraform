@@ -14,5 +14,5 @@ variable "filename" {
 variable "load_city_data" {
   description = "Flag: load city data from local repository"
   type = bool
-  default = true
+  default = false
 }
