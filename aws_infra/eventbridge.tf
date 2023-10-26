@@ -20,7 +20,7 @@ resource "aws_scheduler_schedule" "my_scheduler" {
 
     input = jsonencode({
       MessageBody = jsonencode(data.local_file.json_data.content)
-      QueueUrl = aws_sqs_queue.sqs_queue.id
+      QueueUrl    = aws_sqs_queue.sqs_queue.id
     })
   }
 }

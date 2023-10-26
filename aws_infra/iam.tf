@@ -26,8 +26,8 @@ resource "aws_iam_role" "iam_for_lambda" {
 #Update role with permission to send SNS Notifications, access SQS queue itens, decrypt secure parameter
 data "aws_iam_policy_document" "lambda_policy_doc" {
   statement {
-    sid       = "SendNotification"
-    actions   = [
+    sid = "SendNotification"
+    actions = [
       "sns:Publish"
     ]
     resources = [
@@ -35,8 +35,8 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
     ]
   }
   statement {
-    sid       = "DecryptKMS"
-    actions   = [
+    sid = "DecryptKMS"
+    actions = [
       "kms:Decrypt"
     ]
     resources = [
@@ -45,8 +45,8 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
     effect = "Allow"
   }
   statement {
-    sid       = "GetSecureParameter"
-    actions   = [
+    sid = "GetSecureParameter"
+    actions = [
       "ssm:GetParameter*"
     ]
     resources = [
@@ -68,9 +68,9 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
   statement {
     sid = "WriteLogs"
     actions = [
-        "logs:CreateLogStream",
-        "logs:CreateLogDelivery",
-        "logs:PutLogEvents"
+      "logs:CreateLogStream",
+      "logs:CreateLogDelivery",
+      "logs:PutLogEvents"
     ]
     resources = [
       "arn:aws:logs:*:*:*"
@@ -119,7 +119,7 @@ resource "aws_iam_policy" "sqs_access_policy" {
 resource "aws_iam_role" "eventbridge_scheduler_iam_role" {
   name_prefix         = "eb-scheduler-role-"
   managed_policy_arns = [aws_iam_policy.sqs_access_policy.arn]
-  path = "/"
+  path                = "/"
   assume_role_policy  = <<EOF
 {
     "Version": "2012-10-17",

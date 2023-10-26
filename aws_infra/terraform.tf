@@ -14,6 +14,6 @@ provider "aws" {
 
 #Declare API key as secret variable to prevent leakage
 variable "api_access_key_value" {
-  type = string
+  type      = string
   sensitive = true
 }

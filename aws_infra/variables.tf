@@ -1,9 +1,9 @@
 variable "project_name" {
-  type = string
+  type    = string
   default = "lambda-terraform-github"
 }
 variable "aws_region" {
-  type = string
+  type    = string
   default = "af-south-1"
 }
 
@@ -13,6 +13,6 @@ variable "filename" {
 
 variable "load_city_data" {
   description = "Flag: load city data from local repository"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
