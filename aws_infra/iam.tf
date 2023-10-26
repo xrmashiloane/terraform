@@ -50,7 +50,8 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
       "ssm:GetParameter*"
     ]
     resources = [
-      aws_ssm_parameter.api_access_key_value.arn
+      aws_ssm_parameter.api_access_key_value.arn,
+      aws_ssm_parameter.dynamodb_table_name
     ]
     effect = "Allow"
   }
@@ -77,8 +78,7 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
       "dynamodb:GetItem",
       "dynamodb:Scan",
       "dynamodb:Query",
-      "dynamodb:UpdateItem",
-      "dynamodb:ListTables"
+      "dynamodb:UpdateItem"
     ]
     resources = [
       "arn:aws:dynamodb:${var.aws_region}:${data.aws_caller_identity.current.account_id}:table/${var.project_name}-table"
