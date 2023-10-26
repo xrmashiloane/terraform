@@ -12,6 +12,7 @@ resource "aws_dynamodb_table" "dynamodb-table" {
   }
 }
 
+#Seed DynamoDB with Sample Cities 
 locals {
   city_list    = csvdecode(file("${path.module}/cities.csv"))
   current_temp = 0

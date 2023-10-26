@@ -2,7 +2,7 @@
 
 A lightweight weather API call application written in Python that calls external API on a schedule to retrieve current weather conditions for a provided location.
 
-Project demonstrates using Terraform to provision AWS resourses in with state saved in Terraform Cloud and code stored in Git for source control. And can be set up for fully integrated CI/CD pipeline via Github Actions.
+Project demonstrates using Terraform to provision AWS resourses in with state saved in Terraform Cloud and code stored in Git for source control. Code provides end to end CI/CD pipeline via Github Actions and Terraform Cloud.
 
 GitHub actions to provide Continuos Integration.
 Terraform Cloud to provide Continuous Delivery.
