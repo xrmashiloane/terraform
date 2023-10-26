@@ -1,17 +1,8 @@
-#Required variables for Terraform Cloud. 
 terraform {
   required_providers {
-    aws = {
-      source = "hashicorp/aws"
-    }
-  }
-  #Only required for Terraform Cloud runs
-  #Create organisation and workspace, more details here: https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/organizations
-  cloud {
-    organization = "xrmashiloane"
-
-    workspaces {
-      name = "terraform"
+    tfe = {
+      source  = "hashicorp/tfe"
+      version = ">=0.45.0"
     }
   }
 }
