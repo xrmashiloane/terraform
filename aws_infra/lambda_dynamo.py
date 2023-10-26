@@ -2,16 +2,22 @@ import json
 import boto3
 
 def lambda_handler(event, context):
+    ssm_client = boto3.client('ssm')
 
     dynamodb = boto3.client('dynamodb')
 
-    table = dynamodb.list_tables(
-    )
+    def get_db_name(name):
 
-    print(table['TableNames'][0])
+        parameter = ssm_client.get_parameter(
+                Name=name                        
+                )
+        return parameter['Parameter']['Value']
+
+
+    print(get_db_name('dynamodb_table'))
 
     response = dynamodb.query(
-        TableName=table['TableNames'][0],
+        TableName=get_db_name('dynamodb_table')
         )
 
     print(response)
