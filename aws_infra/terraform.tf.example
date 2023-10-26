@@ -1,24 +1,15 @@
-#Required variables for Terraform Cloud
 terraform {
   required_providers {
-    aws = {
-      source = "hashicorp/aws"
-    }
-  }
-  #Only required for Terraform Cloud runs
-  #Create organisation and workspace, more details here: https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/organizations
-  cloud {
-    organization = <{ REPLACE WITH OWN ORGANISATION DETAILS }>
-
-    workspaces {
-      name = <{ REPLACE WITH OWN WORKSPACE DETAILS }>
+    tfe = {
+      source  = "hashicorp/tfe"
+      version = ">=0.45.0"
     }
   }
 }
 
 provider "aws" {
   # Configuration options
-  region = <{ REPLACE WITH AWS REGION DETAILS }>
+  region = "us-east-1"
 }
 
 #Declare API key as secret variable to prevent leakage. Add .env variable. If using Terraform Cloud add Workspace variable
