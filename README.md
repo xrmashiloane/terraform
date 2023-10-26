@@ -22,13 +22,16 @@ A lightweight weather API call application written in Python that calls external
 
 ## Prerequisites
 
+> [!IMPORTANT]  
+> To eliminate need for long loved credentials you can use Role Based Access Control for this project. This will set up temporary credentials assigned to a specified role linked to Terraform Cloud.
+>This ensures that all actions taken by Terraform Cloud are auditable as well as minimising the blast radius as each run generates temporary token for provisioning steps.
+>Initial setup can be found in `aws_openid/trust`
+
 Setup Terraform Cloud with VCS/Git workflow: https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-sign-up 
 
 Sign up for free weather API account: https://weatherstack.com/signup
 
 Rename terraform.tf.example to terraform.tf 
-
-Replace values enclosed with <{ }> with own values
 
 
 
