@@ -66,6 +66,25 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
     ]
   }
   statement {
+    sid = "DynamoDB"
+    actions = [
+      "dynamodb:BatchGetItem",
+      "dynamodb:BatchWriteItem",
+      "dynamodb:ConditionCheckItem",
+      "dynamodb:PutItem",
+      "dynamodb:DescribeTable",
+      "dynamodb:DeleteItem",
+      "dynamodb:GetItem",
+      "dynamodb:Scan",
+      "dynamodb:Query",
+      "dynamodb:UpdateItem",
+      "dynamodb:ListTables"
+    ]
+    resources = [
+      "arn:aws:dynamodb:${var.aws_region}:${data.aws_caller_identity.current.account_id}:table/*"
+    ]
+  }
+  statement {
     sid = "WriteLogs"
     actions = [
       "logs:CreateLogStream",
