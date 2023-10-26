@@ -13,7 +13,7 @@ data "archive_file" "zip_dynamo" {
 #Create Lambda function and related aliases
 resource "aws_lambda_function" "function_api" {
   filename         = data.archive_file.zip_api.output_path
-  source_code_hash = filebase64sha256(data.archive_file.zip.output_path)
+  source_code_hash = filebase64sha256(data.archive_file.zip_api.output_path)
 
   function_name = "${var.project_name}-api-client"
   description   = "Managed by Terraform"
@@ -27,7 +27,7 @@ resource "aws_lambda_function" "function_api" {
 
 resource "aws_lambda_function" "function_db" {
   filename         = data.archive_file.zip_dynamo.output_path
-  source_code_hash = filebase64sha256(data.archive_file.zip.output_path)
+  source_code_hash = filebase64sha256(data.archive_file.zip_dynamo.output_path)
 
   function_name = "${var.project_name}-dynamodb-client"
   description   = "Managed by Terraform"
