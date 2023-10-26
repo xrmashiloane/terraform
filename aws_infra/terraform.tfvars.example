@@ -1,6 +1,1 @@
-access_key_value = "<{ YOUR API KEY}>"
-
-#Create User for Terraform Cloud. 
-credentials "app.terraform.io" {
-  token = "xxxxxx.atlasv1.zzzzzzzzzzzzz"
-}
+api_access_key_value = "<{ YOUR API KEY}>"

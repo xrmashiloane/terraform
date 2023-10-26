@@ -1,4 +1,4 @@
-#Required variables for Terraform Cloud
+#Required variables for Terraform Cloud. 
 terraform {
   required_providers {
     aws = {
@@ -18,7 +18,7 @@ terraform {
 
 provider "aws" {
   # Configuration options
-  region = var.aws_region
+  region = "af-south-1"
 }
 
 #Declare API key as secret variable to prevent leakage
