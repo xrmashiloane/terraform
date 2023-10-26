@@ -51,7 +51,7 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
     ]
     resources = [
       aws_ssm_parameter.api_access_key_value.arn,
-      aws_ssm_parameter.dynamodb_table_name
+      aws_ssm_parameter.dynamodb_table_name.arn
     ]
     effect = "Allow"
   }
