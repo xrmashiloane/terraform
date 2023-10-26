@@ -32,6 +32,7 @@ Terraform Cloud to provide Continuous Delivery.
 >This ensures that all actions taken by Terraform Cloud are auditable as well as minimising the blast radius as each run generates temporary token for provisioning steps.
 >Initial setup can be found in `aws_openid_config/trust`
 
+
 Setup Terraform Cloud with VCS/Git workflow: https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-sign-up 
 
 Sign up for free weather API account: https://weatherstack.com/signup
@@ -43,16 +44,12 @@ Rename terraform.tf.example to terraform.tf
 ## Deployment
 
 
+Deployment must be done in order below to ensure all components work as expected. 
 
-First create role with access to provision resources in your AWS accrount using terraform files in path {PROJECT_DIR}/aws_openid/trust set variables accordingly.
+Step 1 Configure Terraform Cloud.
+Update files found in ./terraform_cloud_config 
 
-Once variables are setup run below to create role for Terraform for use with OpenID for temporary, role based authentication to AWS this conforms to AWS best practice. 
-
-Remember to delete saved long lasting credentials from local environment for improved security.
-
-
-
-Each folder has Terraform files each peforming a specific task. 
+Run below commands to configure
 
 ```bash
   terraform init
@@ -66,12 +63,51 @@ Each folder has Terraform files each peforming a specific task.
   terraform apply
 ```
 
-This is only required once if VCS/Git is set up for your Terraform Cloud account. Plans will then run from cloud backend on code check in. 
+Step 2 Create required repository 
+Update files found in ./github_actions_config 
+
+Run below commands to configure
+
+```bash
+  terraform init
+```
+
+```bash
+  terraform plan
+```
+
+```bash
+  terraform apply
+```
+
+Step 3 Create AWS Role
+
+Update files found in ./aws_openid_config/trust 
+
+Run below commands to configure
+
+```bash
+  terraform init
+```
+
+```bash
+  terraform plan
+```
+
+```bash
+  terraform apply
+```
+
+Step 4 Link project to GitHub by following steps here: https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-vcs-change
+
+
+Remember to delete saved long lasting credentials from local environment for improved security.
+
+
 
 > [!IMPORTANT]  
 > Set Terraform Cloud to `aws_infra` in workspace setting to ensure correct files are loaded for plans.
-
- More information here: https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings#terraform-working-directory
+ >More information here: https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings#terraform-working-directory
 
 
 ## Tech Stack
