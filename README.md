@@ -110,12 +110,40 @@ Remember to delete saved long lasting credentials from local environment for imp
  >More information here: https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings#terraform-working-directory
 
 
+## Environment Clean up
+
+Environment clean up. 
+
+1. Queue a Destroy Plan via Terraform Cloud. Instructions here: https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-destroy
+
+2. Run destroy on each config folder in reverse to clean up. Destroy AWS Role --> Destroy Github Repo --> Destroy Terraform Cloud config
+
+```bash
+  terraform destroy
+```
+
+
 ## Tech Stack
 
+AWS Services 
 **Client:** Python
 
 **Server:** Serverless Compute
 
+**Lambda**
+**SQQ**
+**SNS**
+**IAM**
+**SSM Parameter Store**
+**DynamoDB**
+
+Enablement Services 
+
+**Terraform Cloud**
+**API Endpoint** https://weatherstack.com/quickstart
+**GitHub**
+**GitHub Actions**
+**OpenID Connect**
 
 ## Authors
 
