@@ -23,10 +23,11 @@ def lambda_handler(event, context):
         
         location = loc['city']['S']
         
+        message = '\{"query" : \"{location}\" \}'.format(location=location)
         
         response = sqs_client.send_message(
             QueueUrl=sqs_parameter,
-            MessageBody= location
+            MessageBody= message
             )
         print("Message sent ")
         print(response['MessageId'])
