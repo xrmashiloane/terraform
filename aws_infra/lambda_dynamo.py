@@ -32,7 +32,7 @@ def lambda_handler(event, context):
 
         print(message_dict)
 
-        message = json.loads(message)
+        message = json.loads(message_dict)
 
         print(type(message))
 
