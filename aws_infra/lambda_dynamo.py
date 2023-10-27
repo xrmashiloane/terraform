@@ -16,8 +16,7 @@ def lambda_handler(event, context):
 
     dataset = dynamodb.scan(
         TableName=database_parameter['Parameter']['Value'],
-        ProjectionExpression='#l',
-        ExpressionAttributeNames = {'#l': 'location'}
+        ProjectionExpression='city'
         )['Items']
     
     for loc in dataset:

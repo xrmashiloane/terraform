@@ -4,10 +4,10 @@ resource "aws_dynamodb_table" "dynamodb-table" {
   billing_mode   = "PROVISIONED"
   read_capacity  = 5
   write_capacity = 5
-  hash_key       = "location"
+  hash_key       = "city"
 
   attribute {
-    name = "location"
+    name = "city"
     type = "S"
   }
 }
@@ -26,7 +26,7 @@ resource "aws_dynamodb_table_item" "city_put" {
 
   item = <<EOF
   {
-    "location": {"S": "${each.value.city}"},
+    "city": {"S": "${each.value.city}"},
     "current_temp": {"N": "${local.current_temp}"}
   }
   EOF
