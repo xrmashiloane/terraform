@@ -34,13 +34,15 @@ def lambda_handler(event, context):
 
         message = json.loads(message)
 
+        print(type(message))
+
 
         response = sqs_client.send_message(
             QueueUrl=sqs_parameter,
             MessageBody= message
             )
         print("Message sent ")
-        print(message)
+        
         print(response['MessageId'])
 
         print(loc['city']['S'])
