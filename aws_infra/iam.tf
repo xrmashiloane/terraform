@@ -135,24 +135,3 @@ resource "aws_iam_policy" "sqs_access_policy" {
     ]
   })
 }
-
-# Create new IAM Role for EventBridge Scheduler
-resource "aws_iam_role" "eventbridge_scheduler_iam_role" {
-  name_prefix         = "eb-scheduler-role-"
-  managed_policy_arns = [aws_iam_policy.sqs_access_policy.arn]
-  path                = "/"
-  assume_role_policy  = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Principal": {
-                "Service": "scheduler.amazonaws.com"
-            },
-            "Action": "sts:AssumeRole"
-        }
-    ]
-}
-EOF
-}
