@@ -21,13 +21,21 @@ def lambda_handler(event, context):
     
     for loc in dataset:
         
+        message_dict = {}
+        param = "query"
         location = loc['city']['S']
-        
-        message = str('\{\"query\" : "{location}" \}'.format(location=location))
-        
+
+        for variable in ["param", "location"]:
+            message_dict[variable] = eval(variable)
+
+
+
+        print(message_dict)
+
+
         response = sqs_client.send_message(
             QueueUrl=sqs_parameter,
-            MessageBody= message
+            MessageBody= location
             )
         print("Message sent ")
         print(response['MessageId'])
