@@ -31,4 +31,4 @@ def lambda_handler(event, context):
         print("Message sent ")
         print(response['MessageId'])
 
-        print(loc['location']['S'])
+        print(loc['city']['S'])
