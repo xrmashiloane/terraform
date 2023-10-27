@@ -40,6 +40,7 @@ def lambda_handler(event, context):
             MessageBody= message
             )
         print("Message sent ")
+        print(message)
         print(response['MessageId'])
 
         print(loc['city']['S'])
