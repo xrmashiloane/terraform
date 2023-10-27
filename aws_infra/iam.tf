@@ -52,7 +52,7 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
     resources = [
       aws_ssm_parameter.api_access_key_value.arn,
       aws_ssm_parameter.dynamodb_table_name.arn,
-      aws_ssm_parameter.aws_ssm_parameter.sqs_queue_url_value.arn
+      aws_ssm_parameter.sqs_queue_url_value.arn
     ]
     effect = "Allow"
   }
