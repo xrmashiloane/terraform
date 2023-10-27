@@ -9,25 +9,26 @@ def lambda_handler(event, context):
 
     database_parameter = ssm_client.get_parameter(
                 Name='dynamodb_table'                        
-                )
+                )['Parameter']['Value']
     sqs_parameter = ssm_client.get_parameter(
                 Name='sqs_queue_url'                        
-                )
+                )['Parameter']['Value']
 
     dataset = dynamodb.scan(
-        TableName=database_parameter['Parameter']['Value'],
+        TableName=database_parameter,
         ProjectionExpression='city'
         )['Items']
     
     for loc in dataset:
-        message = [ "query" , loc['location']['S'] ]
-        message = json.loads(str(message))
-
+        
+        location = loc['location']['S']
+        
+        
         response = sqs_client.send_message(
             QueueUrl=sqs_parameter,
-            MessageBody=message
+            MessageBody= location
             )
-        print("Messahe sent ")
+        print("Message sent ")
         print(response['MessageId'])
 
         print(loc['location']['S'])
