@@ -21,7 +21,7 @@ def lambda_handler(event, context):
     
     for loc in dataset:
         
-        location = loc['location']['S']
+        location = loc['city']['S']
         
         
         response = sqs_client.send_message(
