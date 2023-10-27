@@ -1,23 +1,34 @@
-import json
 import boto3
+import json
 
 def lambda_handler(event, context):
     ssm_client = boto3.client('ssm')
-
+    sqs_client = boto3.client('sqs')
     dynamodb = boto3.client('dynamodb')
 
-    def get_db_name(name):
 
-        parameter = ssm_client.get_parameter(
-                Name=name                        
+    database_parameter = ssm_client.get_parameter(
+                Name='dynamodb_table'                        
                 )
-        return parameter['Parameter']['Value']
+    sqs_parameter = ssm_client.get_parameter(
+                Name='sqs_queue_url'                        
+                )
 
+    dataset = dynamodb.scan(
+        TableName=database_parameter['Parameter']['Value'],
+        ProjectionExpression='#l',
+        ExpressionAttributeNames = {'#l': 'location'}
+        )['Items']
+    
+    for loc in dataset:
+        message = [ "query" , loc['location']['S'] ]
+        message = json.loads(str(message))
 
-    print(get_db_name('dynamodb_table'))
+        response = sqs_client.send_message(
+            QueueUrl=sqs_parameter,
+            MessageBody=message
+            )
+        print("Messahe sent ")
+        print(response['MessageId'])
 
-    response = dynamodb.query(
-        TableName=get_db_name('dynamodb_table')
-        )
-
-    print(response)
+        print(loc['location']['S'])

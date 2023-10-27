@@ -13,3 +13,11 @@ resource "aws_ssm_parameter" "dynamodb_table_name" {
   type        = "String"
   value       = aws_dynamodb_table.dynamodb-table.name
 }
+
+#Create SQS Queue URL
+resource "aws_ssm_parameter" "sqs_queue_url_value" {
+  name        = "sqs_queue_url"
+  description = "Created DynamoDB table name for project"
+  type        = "String"
+  value       = aws_sqs_queue.sqs_queue.id
+}
