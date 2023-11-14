@@ -17,7 +17,6 @@ def lambda_handler(event, context):
             )
         return parameter['Parameter']['Value']
     
-
     params = {
         "access_key": get_parameter('api_access_key_value'),
         "query": raw_text
