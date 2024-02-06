@@ -131,11 +131,12 @@ AWS Services
 **Server:** Serverless Compute
 
 **Lambda**
-**SQQ**
+**SQS**
 **SNS**
 **IAM**
-**SSM Parameter Store**
-**DynamoDB**
+**AWS SSM Parameter Store**
+**AWS DynamoDB**
+**AWS EventBridge**
 
 Enablement Services 
 
