@@ -4,7 +4,7 @@ import boto3
 
 def lambda_handler(event, context):
 
-    client = boto3()
+    client = boto3.client()
 
         # Define constants
     SSM_DYNAMODB_TABLE_PARAMETER = 'dynamodb_table'
