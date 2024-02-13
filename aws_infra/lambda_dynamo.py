@@ -26,7 +26,7 @@ def lambda_handler(event, context):
     # Get dataset from DynamoDB
     def get_dataset_from_dynamodb(database_parameter):
         '''Get dataset from DynamoDB table'''
-        dataset = client('dynamodb').scan(
+        dataset = boto3.client('dynamodb').scan(
             TableName=database_parameter
             )['Items']
         return dataset
