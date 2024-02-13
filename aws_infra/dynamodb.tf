@@ -36,8 +36,4 @@ resource "aws_dynamodb_table_item" "city_put" {
   }
   EOF
 
-  #Ignore subsequent changes to items. Remember to set flag to false after data load
-  lifecycle {
-    ignore_changes = [item]
-  }
 }
