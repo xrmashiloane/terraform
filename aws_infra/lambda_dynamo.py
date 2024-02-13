@@ -40,8 +40,7 @@ def lambda_handler(event, context):
         '''Create list of messages to send to SQS'''
         sqs_messages = []
         for item in dataset:
-            
-            sqs_messages.append( location = item['city']['S'])
+            sqs_messages.append(item['city']['S'])
         return sqs_messages
     
     def send_sqs_messages(sqs_messages, sqs_parameter):
