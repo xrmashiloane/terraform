@@ -23,8 +23,11 @@ def lambda_handler(event, context):
       return database_parameter, access_key
     
     database_parameter, access_key = get_parameters_from_ssm()
+    print("<------Database value------>" + event )
 
     location_query = event['Records'][0]['body']
+
+    print("<------Location value------>" + location_query )
     
     def call_weather_api(access_key, location_query):
         params = {"access_key": access_key, "query": location_query}
