@@ -5,11 +5,15 @@ resource "aws_dynamodb_table" "dynamodb-table" {
   read_capacity  = 5
   write_capacity = 5
   hash_key       = "city"
-
+  ttl{
+    enabled = true
+    attribute_name = "ttl"
+  }
   attribute {
     name = "city"
     type = "S"
   }
+
 }
 
 #Seed DynamoDB with Sample Cities 
@@ -27,7 +31,8 @@ resource "aws_dynamodb_table_item" "city_put" {
   item = <<EOF
   {
     "city": {"S": "${each.value.city}"},
-    "current_temp": {"N": "${local.current_temp}"}
+    "temperature": {"N": "${local.current_temp}"}
+    "ttl": {"N": "${timestamp() + 3600}"}
   }
   EOF
 

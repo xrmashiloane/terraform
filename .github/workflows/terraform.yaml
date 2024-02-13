@@ -1,12 +1,16 @@
 name: 'Terraform'
 
-on: push
+on:
+  pull_request_target:
+    types:
+      - closed
 
 env:
   TF_LOG: INFO
   TF_INPUT: false
 
 jobs:
+
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
