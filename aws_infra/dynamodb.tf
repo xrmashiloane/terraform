@@ -5,8 +5,8 @@ resource "aws_dynamodb_table" "dynamodb-table" {
   read_capacity  = 5
   write_capacity = 5
   hash_key       = "city"
-  ttl{
-    enabled = true
+  ttl {
+    enabled        = true
     attribute_name = "ttl"
   }
   attribute {
