@@ -22,6 +22,8 @@ locals {
   current_temp = 0
 }
 
+
+
 resource "aws_dynamodb_table_item" "city_put" {
   for_each = var.load_city_data ? { for row in local.city_list : row.city => row } : {}
 
@@ -32,7 +34,6 @@ resource "aws_dynamodb_table_item" "city_put" {
   {
     "city": {"S": "${each.value.city}"},
     "temperature": {"N": "${local.current_temp}"}
-    "ttl": {"N": "${timestamp() + 3600}"}
   }
   EOF
 
