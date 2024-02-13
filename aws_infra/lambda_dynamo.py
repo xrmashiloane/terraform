@@ -3,33 +3,48 @@ import json
 
 def lambda_handler(event, context):
     '''Initialise required boto3 clients'''
-    ssm_client = boto3.client('ssm')
-    sqs_client = boto3.client('sqs')
-    dynamodb = boto3.client('dynamodb')
-
-    #Get DynamoDB table name from SSM Parameter store
-    database_parameter = ssm_client.get_parameter(
-                Name='dynamodb_table'                        
-                )['Parameter']['Value']
-    #Get SQS Queue URL
-    sqs_parameter = ssm_client.get_parameter(
-                Name='sqs_queue_url'                        
-                )['Parameter']['Value']
-    #Scan DynamoDB table for Town Names
-    dataset = dynamodb.scan(
-        TableName=database_parameter,
-        ProjectionExpression='city'
-        )['Items']
+    client = boto3.client()
+    # Define constants
+    SSM_DYNAMODB_TABLE_PARAMETER = 'dynamodb_table'
+    SSM_SQS_QUEUE_URL_PARAMETER = 'sqs_queue_url'
     
-    #For each city name Send name of city to SQS
-    for loc in dataset:
-        
-        location = loc['location']['S']
+    # Get parameters from SSM
+    def get_parameters_from_ssm():
+      client = client('ssm')
+  
+      database_parameter = client.get_parameter(
+        Name=SSM_DYNAMODB_TABLE_PARAMETER  
+      )['Parameter']['Value']
 
-        response = sqs_client.send_message(
-            QueueUrl=sqs_parameter,
-            MessageBody= location
+      sqs_parameter = client.get_parameter(  
+        Name=SSM_SQS_QUEUE_URL_PARAMETER
+      )['Parameter']['Value']
+ 
+      return database_parameter, sqs_parameter
+    
+    database_parameter, sqs_parameter = get_parameters_from_ssm()
+
+    # Get dataset from DynamoDB
+    def get_dataset_from_dynamodb(database_parameter):
+        '''Get dataset from DynamoDB table'''
+        dataset = client('dynamodb').scan(
+            TableName=database_parameter
+            )['Items']
+        return dataset
+    
+    dataset = get_dataset_from_dynamodb(database_parameter)
+ 
+    #Create message list for sqs batch
+    def create_sqs_list(dataset):
+        '''Create list of messages to send to SQS'''
+        sqs_messages = []
+        for loc in dataset:
+            location = loc['location']['S']
+            sqs_messages.append(
+                QueueUrl=sqs_parameter,
+                MessageBody=location
             )
-        print("Message sent ")
-        print(response['MessageId'])
-        print(loc['location']['S'])
+        return sqs_messages
+         
+    client('sqs').send_message_batch(create_sqs_list(dataset))
+
