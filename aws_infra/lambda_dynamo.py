@@ -36,11 +36,21 @@ def lambda_handler(event, context):
     dataset = get_dataset_from_dynamodb(database_parameter)
  
     #Create message list for sqs batch
-    def create_sqs_list(dataset):
+    def create_sqs_messages(dataset: List[dict]) -> List[dict]:
         '''Create list of messages to send to SQS'''
         sqs_messages = []
+
         for item in dataset:
-            sqs_messages.append(item['city']['S'])
+
+            location = item['city']['S']
+
+            message = {
+                'Id': str(uuid.uuid4()),
+                'MessageBody': location
+            }
+
+            sqs_messages.append(message)
+
         return sqs_messages
     
     def send_sqs_messages(sqs_messages, sqs_parameter):
@@ -51,7 +61,8 @@ def lambda_handler(event, context):
         )
         return response
 
-    sqs_messages = create_sqs_list(dataset)
+    sqs_messages = create_sqs_messages(dataset)
+    
     print(sqs_messages)
 
     send_sqs_messages(sqs_messages, sqs_parameter)
