@@ -49,5 +49,5 @@ def lambda_handler(event, context):
            TableName='weather_data',
            item=item
         )
-
+    #Add item to db
     call_weather_api(access_key, location_query)

@@ -45,6 +45,6 @@ def lambda_handler(event, context):
                 MessageBody=location
             )
         return sqs_messages
-         
+    #Send Message
     client('sqs').send_message_batch(create_sqs_list(dataset))
 
