@@ -3,14 +3,13 @@ import json
 
 def lambda_handler(event, context):
     '''Initialise required boto3 clients'''
-    client = boto3.client()
     # Define constants
     SSM_DYNAMODB_TABLE_PARAMETER = 'dynamodb_table'
     SSM_SQS_QUEUE_URL_PARAMETER = 'sqs_queue_url'
     
     # Get parameters from SSM
     def get_parameters_from_ssm():
-      client = client('ssm')
+      client = boto3.client('ssm')
   
       database_parameter = client.get_parameter(
         Name=SSM_DYNAMODB_TABLE_PARAMETER  
@@ -46,5 +45,6 @@ def lambda_handler(event, context):
             )
         return sqs_messages
     #Send Message
-    client('sqs').send_message_batch(create_sqs_list(dataset))
+    response = boto3.client('sqs').send_message_batch(create_sqs_list(dataset))
 
+    print(response)
