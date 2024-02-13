@@ -4,8 +4,6 @@ import boto3
 
 def lambda_handler(event, context):
 
-    client = boto3.client()
-
     # Define constants
     SSM_DYNAMODB_TABLE_PARAMETER = 'dynamodb_table'
     API_ACCESS_KEY_PARAMETER = 'api_access_key_value'
@@ -26,7 +24,6 @@ def lambda_handler(event, context):
     
     database_parameter, access_key = get_parameters_from_ssm()
 
-    
     location_query = event['Records'][0]['body']
     
     def call_weather_api(access_key, location_query):
