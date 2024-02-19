@@ -36,7 +36,3 @@ terraform.rc
 .terraform.lock.hcl
 
 .DS_Store
-
-#Ignore Terraform Config file. Rename from terraform.tf.example to terraform.tf and change accordingly
-terraform.tf
-variables.tf
